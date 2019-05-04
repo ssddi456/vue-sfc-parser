@@ -1,0 +1,7 @@
+.demo-component {
+  padding: 2em;
+  background-color: #ededed;
+}
+.demo-component .demo-component-wrapper {
+  background-color: #fff;
+}

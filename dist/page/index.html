@@ -1,0 +1,25 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta http-equiv="X-UA-Compatible" content="ie=edge"/><title>Document</title>    <link rel="stylesheet" href="file:///D:/gitchunk/vue-sfc-parser/dist/pkg/page/index.jade_aio.css" />
+</head><body><div id="main" v-cloak="v-cloak" :class="{            'doc-navigation--is-collapsed': collapsed,            'doc-sidebar--is-visible': sidebarCollapsed,            }"><div id="react-navigation-root"><div data-reactroot="" class="doc-navigation"><nav class="doc-navbar"><router-link :to="'/'" class="doc-navbar__logo"><img src="file:///D:/gitchunk/vue-sfc-parser/dist/static/images/logo.png" class="doc-navbar__logo__img"/><span class="doc-navbar__logo__text">Hexo Doc Theme</span></router-link><i @click="toggleMenu(true)" class="dc-icon dc-icon--close dc-icon--interactive doc-sidebar-close doc-navbar__sidebar-close doc-navbar__sidebar-close--desktop"></i><i @click="toggleSideMenu" class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-navbar__sidebar-toggle"></i><div class="dc-search-form doc-search-form"><input type="search" placeholder="Search..." class="dc-input dc-search-form__input doc-search-form__input"/><button class="dc-btn dc-search-form__btn doc-search-form__btn"><i class="dc-icon dc-icon--search"></i></button></div></nav><nav class="doc-sidebar"><div class="doc-sidebar__vertical-menu"><i @click="toggleMenu(false)" class="dc-icon dc-icon--menu dc-icon--interactive doc-sidebar-toggle doc-sidebar-toggle--primary doc-sidebar__vertical-menu__item"></i><i @click="toggleMenu(false)" class="dc-icon dc-icon--search dc-icon--interactive doc-sidebar__vertical-menu__item doc-sidebar__vertical-menu__item--primary"></i></div><div class="doc-sidebar-content"><ul class="doc-sidebar-list"><li v-for="(link,i) in links" :key="i" :class="{ 'doc-sidebar-list__item--has-children' : link.hasChildren,                                     'doc-sidebar-list__item--children-list--hidden': link.hasChildren &amp;&amp; !link.showChildren,                                     'doc-sidebar-list__item--children-list--show': link.hasChildren &amp;&amp; !link.showChildren,                                     'doc-sidebar-list__item--current': link.current || link.childrenIsCurrent                                      }" class="doc-sidebar-list__item doc-sidebar-list__item--link"><router-link :to="link.path" :class="{'doc-sidebar-list__item__children-toggle': link.hasChildren}"><i v-if="link.hasChildren" @click.stop.prevent="link.showChildren = !link.showChildren">{{ link.showChildren? '-' : '+'}}</i><span>{{link.name}}</span></router-link><ul v-if="link.hasChildren" :class="{ 'doc-sidebar-list__children-list--hidden' : !link.showChildren }" class="doc-sidebar-list__children-list"><router-link v-for="(link,i) in link.children" :key="i" tag="li" :active-class="'doc-sidebar-list__toc-item--current'" :class="{ 'doc-sidebar-list__item--has-children' : link.hasChildren, 'doc-sidebar-list__item--children-list--hidden': link.showChildren }" :to="link.path" class="doc-sidebar-list__item doc-sidebar-list__item--link doc-sidebar-list__item--child"><a><span>{{link.name}}</span></a></router-link></ul></li><li class="doc-sidebar-list__item doc-sidebar-list__item--label"><span>SUPPORT AND FEEDBACK</span></li><li class="doc-sidebar-list__item doc-sidebar-list__item--link"><a href="https://github.com/zalando-incubator/hexo-theme-doc/issues/new" target="_blank"><span>Raise an Issue on Github</span></a></li></ul></div></nav></div></div><div class="doc-content"><div class="dc-page"><div class="dc-card"><div id="react-search-results-root"></div><router-view id="page-content" class="doc-formatting"></router-view></div></div></div></div><script src="https://cdn.bootcss.com/vue/2.5.21/vue.js"></script><script src="https://cdn.bootcss.com/vue-router/3.0.6/vue-router.js"></script><script src="https://cdn.bootcss.com/require.js/2.3.4/require.min.js"></script>
+<script type="text/javascript" src="file:///D:/gitchunk/vue-sfc-parser/dist/pkg/page/index.jade_aio.js"></script>
+<script>define('vue', [], function () {
+    'use strict';
+    return {
+        default: Vue
+    };
+});
+define('vue-router', [], function () {
+    'use strict';
+    return {
+        default: VueRouter
+    };
+});
+define('vue/types', [], function () {
+    'use strict';
+    return {
+        default: Vue
+    };
+});
+require(['/static/doc'], function ( doc ) {
+    console.log(doc);
+});</script>
+</body></html>

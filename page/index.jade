@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible", content="ie=edge")
+        title Document
+        link(rel="stylesheet", href="../static/styles/doc.css")
+        link(rel="stylesheet", href="../static/styles/component.less")
+        link(rel="stylesheet", href="../static/styles/highlight.less")
+    body
+        #main(v-cloak, :class="{\
+            'doc-navigation--is-collapsed': collapsed,\
+            'doc-sidebar--is-visible': sidebarCollapsed,\
+            }")
+            #react-navigation-root
+                .doc-navigation(data-reactroot='')
+                    nav.doc-navbar
+                        router-link.doc-navbar__logo(:to="'/'")
+                            img.doc-navbar__logo__img(src='../static/images/logo.png')
+                            span.doc-navbar__logo__text Hexo Doc Theme
+                        i.dc-icon.dc-icon--close.dc-icon--interactive.doc-sidebar-close.doc-navbar__sidebar-close.doc-navbar__sidebar-close--desktop(@click="toggleMenu(true)")
+                        i.dc-icon.dc-icon--menu.dc-icon--interactive.doc-sidebar-toggle.doc-navbar__sidebar-toggle(@click="toggleSideMenu")
+                        .dc-search-form.doc-search-form
+                            input.dc-input.dc-search-form__input.doc-search-form__input(type='search', placeholder='Search...')
+                            button.dc-btn.dc-search-form__btn.doc-search-form__btn
+                                i.dc-icon.dc-icon--search
+                    nav.doc-sidebar
+                        .doc-sidebar__vertical-menu
+                            i.dc-icon.dc-icon--menu.dc-icon--interactive.doc-sidebar-toggle.doc-sidebar-toggle--primary.doc-sidebar__vertical-menu__item(@click="toggleMenu(false)")
+                            i.dc-icon.dc-icon--search.dc-icon--interactive.doc-sidebar__vertical-menu__item.doc-sidebar__vertical-menu__item--primary(@click="toggleMenu(false)")
+                        .doc-sidebar-content
+                            ul.doc-sidebar-list
+                                li.doc-sidebar-list__item.doc-sidebar-list__item--link(
+                                    v-for="(link,i) in links",
+                                    :key="i",
+                                    :class="{ 'doc-sidebar-list__item--has-children' : link.hasChildren,\
+                                     'doc-sidebar-list__item--children-list--hidden': link.hasChildren && !link.showChildren,\
+                                     'doc-sidebar-list__item--children-list--show': link.hasChildren && !link.showChildren,\
+                                     'doc-sidebar-list__item--current': link.current || link.childrenIsCurrent\
+                                      }",)
+                                    router-link(
+                                        :to="link.path",
+                                        :class="{'doc-sidebar-list__item__children-toggle': link.hasChildren}")
+                                        i(v-if="link.hasChildren",
+                                            @click.stop.prevent="link.showChildren = !link.showChildren") {{ link.showChildren? '-' : '+'}}
+                                        span {{link.name}}
+
+                                    ul.doc-sidebar-list__children-list(
+                                        v-if="link.hasChildren",
+                                        :class="{ 'doc-sidebar-list__children-list--hidden' : !link.showChildren }",
+                                        )
+                                        router-link.doc-sidebar-list__item.doc-sidebar-list__item--link.doc-sidebar-list__item--child(
+                                            v-for="(link,i) in link.children",
+                                            :key="i",
+                                            tag="li",
+                                            :active-class="'doc-sidebar-list__toc-item--current'",
+                                            :class="{ 'doc-sidebar-list__item--has-children' : link.hasChildren, 'doc-sidebar-list__item--children-list--hidden': link.showChildren }",
+                                            :to="link.path")
+                                            a
+                                                span {{link.name}}
+                                
+                                li.doc-sidebar-list__item.doc-sidebar-list__item--label
+                                    span SUPPORT AND FEEDBACK
+                                li.doc-sidebar-list__item.doc-sidebar-list__item--link
+                                    a(href='https://github.com/zalando-incubator/hexo-theme-doc/issues/new', target='_blank')
+                                        span Raise an Issue on Github
+            .doc-content
+                .dc-page
+                    .dc-card
+                        #react-search-results-root
+                        router-view#page-content.doc-formatting
+        script(src='https://cdn.bootcss.com/vue/2.5.21/vue.js')
+        //ignore
+        script(src="https://cdn.bootcss.com/vue-router/3.0.6/vue-router.js")
+        //ignore
+        script(src='https://cdn.bootcss.com/require.js/2.3.4/require.min.js')
+        script(src="../static/doc.ts")
+        script.
+            define('vue', [], function () {
+                'use strict';
+                return {
+                    default: Vue
+                };
+            });
+            define('vue-router', [], function () {
+                'use strict';
+                return {
+                    default: VueRouter
+                };
+            });
+            define('vue/types', [], function () {
+                'use strict';
+                return {
+                    default: Vue
+                };
+            });
+            require(['../static/doc'], function ( doc ) {
+                console.log(doc);
+            });
