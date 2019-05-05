@@ -47,6 +47,5 @@ module.exports = function tryHighlight(str, lang) {
         return result;
     } catch (err) {
         console.log(err);
-        
     }
 }

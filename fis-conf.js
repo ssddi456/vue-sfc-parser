@@ -14,6 +14,33 @@ fis.set('project.files', [
     'test/**',
 ]);
 
+var parserConf2Less = {
+    rExt: 'css',
+    parser: fis.plugin('less'),
+    postprocessor: [
+        fis.plugin('cssreset', {
+            ignore: {
+                no: [
+                    'max-width',
+                    'min-height'
+                ]
+            },
+            regain: {
+                px: [
+                    'font*'
+                ]
+            }
+        }),
+        fis.plugin('autoprefixer', {
+            browsers: [
+                'last 3 versions',
+                'chrome >= 34',
+                'safari >= 10.1',
+                'ios >= 10',
+                'android >= 4.2']
+        })
+    ]
+}
 
 fis
     .match('**.jade', {
@@ -38,6 +65,12 @@ fis
         moduleId: '$1',
         parser: fis.plugin('vue-component', {
             runtimeOnly: false,
+            styleNameJoin: '',
+            extractCSS: true,
+            cssScopedIdPrefix: '_v-',
+            cssScopedHashType: 'sum',
+            cssScopedHashLength: 8,
+            cssScopedFlag: '__vuec__'
         }),
     })
     .match('(**).vue:js', {
@@ -49,6 +82,9 @@ fis
     .match('(**).vue:less', {
         parser: fis.plugin('less'),
     })
+
+    .match('test/(**).vue:less', parserConf2Less)
+
     .match('(**).vue:pug', {
         parser: fis.plugin('jade'),
     })
@@ -70,7 +106,9 @@ fis
     })
 
 fis.unhook('components');
-fis.hook(require('./build/hook'));
+fis.hook(require('./build/hook'), {
+    
+});
 fis.hook('commonjs', {
     extList: ['.js', '.jsx', '.es', '.ts', '.tsx', '.vue']
 });
@@ -85,7 +123,6 @@ fis.match('::package', {
 
 fis
     .match('*', {
-        domain: 'file:///D:/gitchunk/vue-sfc-parser/dist',
         deploy: fis.plugin('local-deliver', {
             to: './dist'
         }), // 发布到本地，由 -d 参数制定目录

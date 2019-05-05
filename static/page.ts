@@ -5,8 +5,8 @@ import { addMenuItem } from "./menu";
 export default {
         template: /* template */ `
         <div>
-            Page
+            Layout
         </div>
         `
     };
-addMenuItem('Page', '/page');
+addMenuItem('Layout', '/layout');

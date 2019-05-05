@@ -4,9 +4,9 @@ define('/static/page', function(require, exports, module) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var menu_1 = require("/static/menu");
   exports.default = {
-      template: /* template */ "\n        <div>\n            Page\n        </div>\n        "
+      template: /* template */ "\n        <div>\n            Layout\n        </div>\n        "
   };
-  menu_1.addMenuItem('Page', '/page');
+  menu_1.addMenuItem('Layout', '/layout');
   
 
 });

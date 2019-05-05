@@ -1331,7 +1331,7 @@ p,
 @font-face {
   font-family: "DressCodeIcons";
   src: url("../../fonts/DressCodeIcons.eot?v=2.4.0");
-  src: url("../../fonts/DressCodeIcons.eot?#iefix") format("eot"), url("file:///D:/gitchunk/vue-sfc-parser/dist/fonts/DressCodeIcons.woff?v=2.4.0") format("woff"), url("../../fonts/DressCodeIcons.ttf?v=2.4.0") format("truetype"), url("../../fonts/DressCodeIcons.svg?v=2.4.0#DressCodeIcons") format("svg"); }
+  src: url("../../fonts/DressCodeIcons.eot?#iefix") format("eot"), url("/fonts/DressCodeIcons.woff?v=2.4.0") format("woff"), url("../../fonts/DressCodeIcons.ttf?v=2.4.0") format("truetype"), url("../../fonts/DressCodeIcons.svg?v=2.4.0#DressCodeIcons") format("svg"); }
 
 .dc-icon:before {
   font-family: "DressCodeIcons";
@@ -3849,11 +3849,20 @@ body {
 .doc-navbar__logo__text {
   text-transform: uppercase; }
 
+.demo-container {
+  display: flex;
+}
+.demo-code {
+  padding: 0 20px;
+  overflow: auto;
+}
 .demo-component {
   padding: 2em;
   background-color: #ededed;
 }
 .demo-component .demo-component-wrapper {
+  width: 375px;
+  position: relative;
   background-color: #fff;
 }
 

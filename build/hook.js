@@ -14,10 +14,12 @@ var md = new MarkdownIt({
 module.exports = function (fis, options) {
     var logAllEvent = false;
     //  logAllEvent = true;
-    var root = 'test/';
+    var root = options.root || 'test/'; 
+    var componentInfoFileName = options.componentInfoFileName || 'component-info.ts';
+
     var componentFileSubpath = '/static/component.ts';
-    var componentsInfoFileName = fis.project.getProjectPath('component-info.ts');
-    var componentsInfoSubpath = '/component-info.ts';
+    var componentsInfoFileName = fis.project.getProjectPath(componentInfoFileName);
+    var componentsInfoSubpath = '/' + componentInfoFileName;
 
     if (logAllEvent) {
         var oldEmit = fis.emit;

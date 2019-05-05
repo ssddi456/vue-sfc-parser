@@ -1,7 +1,16 @@
+.demo-container {
+  display: flex;
+}
+.demo-code {
+  padding: 0 20px;
+  overflow: auto;
+}
 .demo-component {
   padding: 2em;
   background-color: #ededed;
 }
 .demo-component .demo-component-wrapper {
+  width: 375px;
+  position: relative;
   background-color: #fff;
 }

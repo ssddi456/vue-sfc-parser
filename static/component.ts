@@ -72,14 +72,18 @@ export default {
         <div>
             <h1>{{componentId}}</h1>
             <h2>demo</h2>
-            <div class="demo-component">
-                <div class="demo-component-wrapper dc-card">
-                    <component :is="demoComponent"></component>
+            <div class="demo-container">
+                <div class="demo-component">
+                    <div class="dc-card" style="padding:0">
+                        <div class="demo-component-wrapper">
+                            <component :is="demoComponent"></component>
+                        </div>
+                    </div>
+                </div>
+                <div class="demo-code">
+                    <pre style="margin:0"><code class="hljs" v-html="demoCode"></code></pre>
                 </div>
             </div>
-            <h2>demo code</h2>
-            <pre><code class="hljs" v-html="demoCode"></code></pre>
-
             <div v-html="readme"></div>
             <div v-if="info">
                 <h2>props</h2>
