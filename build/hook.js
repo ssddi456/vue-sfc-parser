@@ -5,6 +5,7 @@ var parse = vuedoc.parse;
 var Loader = vuedoc.Loader;
 var pug = require('pug');
 var deasync = require('deasync');
+var pugParser = require('./pug-parser');
 
 var MarkdownIt = require('markdown-it');
 var md = new MarkdownIt({
@@ -30,6 +31,16 @@ module.exports = function (fis, options) {
         fis.emit = newEmit;
     }
 
+    fis.on('release:start', function (res) {
+        Object.keys(res.src).forEach(function (subpath) {
+            const file = res.src[subpath];
+            if (subpath.indexOf('/component/') == 0 && file.ext == '.vue') {
+                pugParser.getComponentDeps({
+                    componentPath: subpath,
+                }, false);
+            }
+        });
+    });
 
     fis.on('compile:start', function (file) {
         if (file.id.indexOf(root) == 0) {
