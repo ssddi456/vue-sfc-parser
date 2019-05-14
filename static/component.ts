@@ -31,6 +31,7 @@ export default {
             componentReadme: '',
             demoCode: '',
             readme: '',
+            demoUrl: '',
             info: undefined
         };
     },
@@ -45,17 +46,16 @@ export default {
     methods: {
         loadComponent() {
             const currentComponentInfo: ComponentInfo = componentInfos[this.componentId];
+
+            console.log(currentComponentInfo);
+            
             if (currentComponentInfo) {
-                (
-                    (require as any) as (moduleId: string[], moduleHandler: (module: { default: {} }) => void) => void
-                )([currentComponentInfo.componentDemoId], (demo) => {
-                    this.demoComponent = demo.default;
-                    this.demoCode = currentComponentInfo.demoCode;
-                    this.readme = currentComponentInfo.readme;
-                    this.info = currentComponentInfo.info;
-                });
+                this.demoUrl = `/component/${this.componentId}/demo-preview.html`;
+                this.demoCode = currentComponentInfo.demoCode;
+                this.readme = currentComponentInfo.readme;
+                this.info = currentComponentInfo.info;
             } else {
-                this.demoComponent = index;
+                this.demoUrl = '';
                 this.demoCode = '';
                 this.readme = '';
                 this.info = undefined;
@@ -76,7 +76,7 @@ export default {
                 <div class="demo-component">
                     <div class="dc-card" style="padding:0">
                         <div class="demo-component-wrapper">
-                            <component :is="demoComponent"></component>
+                            <iframe :src="demoUrl"></iframe>
                         </div>
                     </div>
                 </div>
