@@ -18,10 +18,33 @@
         height: 667px;
         position: relative;
         background-color: #fff;
+
         iframe {
             height: 100%;
             width: 100%;
             border: none;
+        }
+    }
+}
+
+.tab {
+    .head {
+        ul {
+            padding-left: 0;
+        }
+
+        li {
+            display: inline-block;
+            margin: 0 10px;
+            span {
+                padding: 5px 10px;
+                border-bottom: 1px solid #fff;
+            }
+            
+            &.active span {
+                padding: 5px 10px;
+                border-bottom: 2px solid #ff8e25;
+            }
         }
     }
 }

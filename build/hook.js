@@ -15,7 +15,7 @@ var md = new MarkdownIt({
 module.exports = function (fis, options) {
     var logAllEvent = false;
     //  logAllEvent = true;
-    var root = options.root || 'test/'; 
+    var root = options.root || 'test/';
     var componentInfoFileName = options.componentInfoFileName || 'component-info.ts';
 
     var componentFileSubpath = '/static/component.ts';
@@ -54,7 +54,7 @@ module.exports = function (fis, options) {
                     derivedFromFile(file, '-highlightcode.html', {}, highlight(content, 'html').value);
                 } else if (basename == 'readme.md') {
                     derivedFromFile(file, '-readme.html', {}, md.render(content));
-                } else if (basename == componentName+'.vue') {
+                } else if (basename == componentName + '.vue') {
                     (function (newFile) {
                         var parsed = false;
                         parseComponentInfo(content, function (info) {
@@ -72,7 +72,7 @@ module.exports = function (fis, options) {
         }
     });
     fis.on('packager', function (ret) {
-        
+
         var componentMap = {};
         var moreRequires = [];
         function getComponentInfo(name) {
@@ -85,23 +85,22 @@ module.exports = function (fis, options) {
             });
         }
         Object.keys(ret.src).forEach(function (id) {
-            if (id.indexOf(root) == 1) {
+            if (id.indexOf(root) === 1) {
                 var componentPathSeg = id.split('/');
 
-                if (componentPathSeg.length == 4) {
+                if (componentPathSeg.length === 4) {
                     var componentName = componentPathSeg[2];
                     var componentInfo = getComponentInfo(componentName);
                     var basename = path.basename(id).toLowerCase();
                     var file = ret.src[id];
                     var content = file.getContent();
-                    if (basename == 'demo.vue') {
+                    if (basename === 'demo.vue') {
                         componentInfo.componentDemoId = file.moduleId;
-                        moreRequires.push(file.id);
-                    } else if (basename == 'demo-highlightcode.html') {
+                    } else if (basename === 'demo-highlightcode.html') {
                         componentInfo.demoCode = content;
-                    } else if (basename == 'readme-readme.html') {
+                    } else if (basename === 'readme-readme.html') {
                         componentInfo.readme = content;
-                    } else if (basename == componentName + '-info.json') {
+                    } else if (basename === componentName + '-info.json') {
                         componentInfo.info = JSON.parse(content);
                     }
                 }
@@ -109,12 +108,12 @@ module.exports = function (fis, options) {
         });
 
         var componentsInfoFile = ret.src[componentsInfoSubpath];
-        componentsInfoFile.setContent('define("' + componentsInfoFile.moduleId +'", function() { return ' + JSON.stringify(componentMap) + '})');
+        componentsInfoFile.setContent('define("' + componentsInfoFile.moduleId + '", function() { return ' + JSON.stringify(componentMap) + '})');
         moreRequires.push(componentsInfoFile.id);
 
         for (let i = 0; i < moreRequires.length; i++) {
             const element = moreRequires[i];
-            if(ret.src[componentFileSubpath].requires.indexOf(element) == -1){
+            if (ret.src[componentFileSubpath].requires.indexOf(element) == -1) {
                 ret.src[componentFileSubpath].requires.push(element);
             }
         }
@@ -126,8 +125,8 @@ module.exports = function (fis, options) {
 
 
 function derivedFromFile(file, name, props, content) {
-    var newFileName = styleFileName = file.realpathNoExt + name;
-    var newFile = fis.file.wrap(newFileName);
+    const newFileName = file.realpathNoExt + name;
+    const newFile = fis.file.wrap(newFileName);
     newFile.cache = file.cache;
 
     for (const key in props) {
@@ -148,7 +147,7 @@ function derivedFromFile(file, name, props, content) {
     return newFile;
 }
 
-function parseComponentInfo (code, callback) {
+function parseComponentInfo(code, callback) {
     function PugLoader(options) {
         return {
             load(source) {
@@ -157,7 +156,7 @@ function parseComponentInfo (code, callback) {
                 // don't forget the return here
                 return Promise.resolve();
             }
-        }
+        };
     }
 
     parse({

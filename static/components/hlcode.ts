@@ -8,6 +8,6 @@ export default {
         }
     },
     template: /* template */`
-    <pre><code v-html="text" class="hljs" :class="lang"></code></pre>
+    <pre style="margin:0"><code v-html="text" class="hljs" :class="lang"></code></pre>
 `
 }

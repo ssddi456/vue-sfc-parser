@@ -1,6 +1,8 @@
 import { addMenuItem, addMenuListItem, } from "./menu";
 import Vue = require("vue");
 import componentInfos = require('/component-info');
+import hlcode from "./components/hlcode";
+import tab from "./components/tab";
 
 
 interface ComponentInfo {
@@ -47,8 +49,6 @@ export default {
         loadComponent() {
             const currentComponentInfo: ComponentInfo = componentInfos[this.componentId];
 
-            console.log(currentComponentInfo);
-            
             if (currentComponentInfo) {
                 this.demoUrl = `/component/${this.componentId}/demo-preview.html`;
                 this.demoCode = currentComponentInfo.demoCode;
@@ -63,49 +63,61 @@ export default {
         }
 
     },
-    watch: {
-        componentId() {
-
-        }
+    components: {
+        index,
+        hlcode,
+        tab,
     },
     template: /* template */ `
         <div>
-            <h1>{{componentId}}</h1>
-            <h2>demo</h2>
-            <div class="demo-container">
-                <div class="demo-component">
-                    <div class="dc-card" style="padding:0">
-                        <div class="demo-component-wrapper">
-                            <iframe :src="demoUrl"></iframe>
+            <index v-if="componentId== 'index'"></index>
+            <div v-else>
+                <h1>{{componentId}}</h1>
+                <tab :titles="['demo', 'doc']">
+                    <template v-slot:title="title">
+                        {{ title.text }}
+                    </template>
+                    <template v-slot:body="body">
+                        <div class="demo-container" v-if="body.currentIndex == 0">
+                            <div class="demo-component">
+                                <div class="dc-card" style="padding:0">
+                                    <div class="demo-component-wrapper">
+                                        <iframe :src="demoUrl"></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="demo-code">
+                                <hlcode :text="demoCode" :lang="'html'"></hlcode>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="demo-code">
-                    <pre style="margin:0"><code class="hljs" v-html="demoCode"></code></pre>
-                </div>
-            </div>
-            <div v-html="readme"></div>
-            <div v-if="info">
-                <h2>props</h2>
-                <div v-for="(item) in info.props">
-                    <h3>{{item.name}}</h3>
-                    <p>{{item.description}}</p>
-                </div>
-                <h2>slots</h2>
-                <div v-for="(item) in info.slots">
-                    <h3>{{item.name}}</h3>
-                    <p>{{item.description}}</p>
-                </div>
-                <h2>events</h2>
-                <div v-for="(item) in info.events">
-                    <h3>{{item.name}}</h3>
-                    <p>{{item.description}}</p>
-                </div>
-                <h2>methods</h2>
-                <div v-for="(item) in info.methods">
-                    <h3>{{item.name}}</h3>
-                    <p>{{item.description}}</p>
-                </div>
+                        
+                        <div v-if="body.currentIndex == 1">
+                            <div v-html="readme"></div>
+                            <div v-if="info">
+                                <h2>props</h2>
+                                <div v-for="(item) in info.props">
+                                    <h3>{{item.name}}</h3>
+                                    <p>{{item.description}}</p>
+                                </div>
+                                <h2>slots</h2>
+                                <div v-for="(item) in info.slots">
+                                    <h3>{{item.name}}</h3>
+                                    <p>{{item.description}}</p>
+                                </div>
+                                <h2>events</h2>
+                                <div v-for="(item) in info.events">
+                                    <h3>{{item.name}}</h3>
+                                    <p>{{item.description}}</p>
+                                </div>
+                                <h2>methods</h2>
+                                <div v-for="(item) in info.methods">
+                                    <h3>{{item.name}}</h3>
+                                    <p>{{item.description}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </tab>
             </div>
         </div>
         `
