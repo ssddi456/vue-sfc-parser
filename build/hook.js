@@ -1,16 +1,12 @@
 var path = require('path');
-var highlight = require('./highlight');
 var vuedoc = require("@vuedoc/parser");
 var parse = vuedoc.parse;
 var Loader = vuedoc.Loader;
 var pug = require('pug');
 var deasync = require('deasync');
 var pugParser = require('./pug-parser');
-
-var MarkdownIt = require('markdown-it');
-var md = new MarkdownIt({
-    highlight,
-});
+var highlight = require('./highlight');
+var md = require('./md_renderer');
 
 module.exports = function (fis, options) {
     var logAllEvent = false;

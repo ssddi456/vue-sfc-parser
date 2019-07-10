@@ -147,6 +147,13 @@ fis
             allowSyntheticDefaultImports: true
         }),
     })
+    .match('/common/**.md', {
+        rExt: 'js',
+        isJsLike: true,
+        isTextLike: true,
+        isMod: true,
+        parser: require('./build/compile_md')
+    })
     .match('dist/**', {
         release: false
     })
@@ -170,7 +177,7 @@ fis.match('::package', {
 
 fis
     .match('*', {
-        deploy: fis.plugin('local-deliver', {
+        deploy: [fis.plugin('local-deliver', {
             to: './dist'
-        }), // 发布到本地，由 -d 参数制定目录
+        })], // 发布到本地，由 -d 参数制定目录
     });
