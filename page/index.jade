@@ -74,9 +74,17 @@ html(lang="en")
         //ignore
         script(src="https://cdn.bootcss.com/vue-router/3.0.6/vue-router.js")
         //ignore
+        script(src="https://cdn.bootcss.com/qrcode-generator/1.4.3/qrcode.min.js")
+        //ignore
         script(src='https://cdn.bootcss.com/require.js/2.3.4/require.min.js')
         script(src="../static/doc.ts")
         script.
+            define('qrcode-generator', [], function () {
+                'use strict';
+                return {
+                    default: qrcode
+                };
+            });
             define('vue', [], function () {
                 'use strict';
                 return {

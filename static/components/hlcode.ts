@@ -7,7 +7,7 @@ export default {
             type: String
         }
     },
-    template: /* template */`
+    template: `
     <pre style="margin:0"><code v-html="text" class="hljs" :class="lang"></code></pre>
 `
 }

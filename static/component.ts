@@ -3,7 +3,8 @@ import Vue = require("vue");
 import componentInfos = require('/component-info');
 import hlcode from "./components/hlcode";
 import tab from "./components/tab";
-
+import props from './components/props';
+import qrcode from './components/qrcode';
 
 interface ComponentInfo {
     name: string,
@@ -67,8 +68,15 @@ export default {
         index,
         hlcode,
         tab,
+        props,
+        qrcode,
     },
-    template: /* template */ `
+    computed: {
+        qrDemoUrl() {
+            return location.protocol + '//' + location.host + this.demoUrl;
+        }
+    },
+    template: `
         <div>
             <index v-if="componentId== 'index'"></index>
             <div v-else>
@@ -76,8 +84,9 @@ export default {
                 <tab :titles="['demo', 'doc']">
                     <template v-slot:title="title">
                         {{ title.text }}
-                    </template>
+                    </template>                    
                     <template v-slot:body="body">
+                        <qrcode :text="qrDemoUrl"></qrcode>
                         <div class="demo-container" v-if="body.currentIndex == 0">
                             <div class="demo-component">
                                 <div class="dc-card" style="padding:0">
@@ -94,26 +103,10 @@ export default {
                         <div v-if="body.currentIndex == 1">
                             <div v-html="readme"></div>
                             <div v-if="info">
-                                <h2>props</h2>
-                                <div v-for="(item) in info.props">
-                                    <h3>{{item.name}}</h3>
-                                    <p>{{item.description}}</p>
-                                </div>
-                                <h2>slots</h2>
-                                <div v-for="(item) in info.slots">
-                                    <h3>{{item.name}}</h3>
-                                    <p>{{item.description}}</p>
-                                </div>
-                                <h2>events</h2>
-                                <div v-for="(item) in info.events">
-                                    <h3>{{item.name}}</h3>
-                                    <p>{{item.description}}</p>
-                                </div>
-                                <h2>methods</h2>
-                                <div v-for="(item) in info.methods">
-                                    <h3>{{item.name}}</h3>
-                                    <p>{{item.description}}</p>
-                                </div>
+                                <props :title="'props'" :info="info.props"></props>
+                                <props :title="'slots'" :info="info.slots"></props>
+                                <props :title="'events'" :info="info.events"></props>
+                                <props :title="'methods'" :info="info.methods"></props>
                             </div>
                         </div>
                     </template>
